@@ -1,5 +1,6 @@
 options:
 	bot: "BOT TOKEN HERE"
+	guild: "GUILD ID HERE"
 on load:
 	if {@bot} is not "BOT TOKEN HERE":
 		login to {@bot} with name "e"
@@ -35,20 +36,20 @@ command /discord [<text>]:
 
 on region enter:
 	wait 1 tick
-	if "%region%" contains "test4":
+	if "%region%" contains "test4": #test4 is region name(WorldGuard)
 		if {discord.%player's uuid%} is set:
-			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "638389367898898462" with "e"
+			move user with id "%{discord.%player's uuid%}%" in guild with id {@guild} to voice channel with id "REGION 1" with "e"
 
-	else if "%region%" contains "test5":
+	else if "%region%" contains "test5": #test5 is region name(WorldGuard)
 		if {discord.%player's uuid%} is set:
-			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "638389457153818654" with "e"
+			move user with id "%{discord.%player's uuid%}%" in guild with id {@guild} to voice channel with id "REGION 2" with "e"
 	else:
 		if {discord.%player's uuid%} is set:
-			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
+			move user with id "%{discord.%player's uuid%}%" in guild with id {@guild} to voice channel with id "LOBBY VOICE CHANNEL ID" with "e"
 			
 on region leave:
 	if {discord.%player's uuid%} is set:
-		move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
+		move user with id "%{discord.%player's uuid%}%" in guild with id {@guild} to voice channel with id "LOBBY VOICE CHANNEL ID" with "e"
 on quit:
 	if {discord.%player's uuid%} is set:
-		move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
+		move user with id "%{discord.%player's uuid%}%" in guild with id {@guild} to voice channel with id "LOBBY VOICE CHANNEL ID" with "e"
