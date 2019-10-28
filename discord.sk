@@ -1,0 +1,54 @@
+options:
+	bot: "BOT TOKEN HERE"
+on load:
+	if {@bot} is not "BOT TOKEN HERE":
+		login to {@bot} with name "e"
+	else:
+		broadcast "&cPlease set your bot token"
+discord command link [<text>]:
+    trigger:
+        send "Received" to console
+        if arg 1 is not set:
+            reply with "Please input your verification code, if you do not have one type /link ingame."
+        else if {code::%arg 1%} is not set:
+            reply with "Please type /link ingame to get your verification code"
+        else if {code::%arg 1%} is set:
+            set {_it} to {code::%arg-1%}
+            set {discord::%id of event-member%::player} to {code::%arg-1%}
+            set {discord::%id of event-member%} to id of event-member
+            set {discord.%{code::%arg-1%}%} to id of event-user
+            set {discordid.%event-user%} to {code::%arg-1%}
+            reply with "Your minecraft account: %{code2::%arg-1%}%(%{code::%arg-1%}%) has been linked to your Discord account!"
+            send "&a%name of event-user%(%id of event-user%) has been linked to your minecraft account!" to {code2::%arg-1%}
+            delete {code::%arg-1%}
+            delete {code2::%arg-1%}
+            send "Received" to console
+command /discord [<text>]:
+	trigger:
+		if arg-1 is "link":
+			set {_e} to random 8 char string from charset `a-zA-Z0-9`
+			set {code::%{_e}%} to player's uuid
+			set {code2::%{_e}%} to player
+			message "Your code to link is %{_e}%"
+		if arg-1 is "tell":
+			message "&aPlease use &b/tell"
+
+on region enter:
+	wait 1 tick
+	if "%region%" contains "test4":
+		if {discord.%player's uuid%} is set:
+			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "638389367898898462" with "e"
+
+	else if "%region%" contains "test5":
+		if {discord.%player's uuid%} is set:
+			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "638389457153818654" with "e"
+	else:
+		if {discord.%player's uuid%} is set:
+			move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
+			
+on region leave:
+	if {discord.%player's uuid%} is set:
+		move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
+on quit:
+	if {discord.%player's uuid%} is set:
+		move user with id "%{discord.%player's uuid%}%" in guild with id "627499361160658959" to voice channel with id "627499361160658964" with "e"
